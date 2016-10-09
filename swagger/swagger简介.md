@@ -120,7 +120,8 @@ public class User {
 ```
 
 ## 其他
-1. 如何忽略某个Controller
+
+ - 如何忽略某个Controller
 在创建group的时候，api的只选择有api注解的controller，想忽略某个controller的时候，直接取出其api注解。
 ```
  Docket docket = new Docket(DocumentationType.SWAGGER_2)
@@ -131,11 +132,18 @@ public class User {
                	.paths(or(regex("/user/.*"),regex("/exuser/.*")))
                .build();
 ```
-2. 如何忽略某个方法
+ - 如何忽略某个方法
 ```
 @ApiIgnore //使用这个注解忽略方法
 ```
-3. 忽略实体属性
+ - 忽略实体属性
 ```
 @JsonIgnore//使用这个注解忽略实体属性
+```
+ - 实体传参时，只要求传入某些属性，如何做？
+```java
+@ApiOperation(value = "新增用户", 
+			notes = "增加用户。"
+			+ "<br>1.groupId 必填"
+			+ "<br>2.roleIds 角色必填")
 ```

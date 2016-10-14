@@ -1,0 +1,86 @@
+.pagination-main {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0 0;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+.pagination-main li.prev-page > a {
+    border: 0;
+}
+.pagination-main li.next-page > a {
+    border: 0;
+    border-left: 1px;
+    margin-left: 0;
+}
+.pagination-main li.first-page > a {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.pagination-main li.last-page > a {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.pagination-main li div {
+    width: 85px;background-color: #ffffff;float: left;padding: 0;
+}
+.pagination-main li.skip-page input[type='text'] {
+    width: 24px;height: 20px;text-align: center;
+}
+.pagination-main li.skip-page input[type='button'] {
+    height: 1.1rem;
+    width: 36px;
+    margin-left: -4px;
+    color: white;
+    border: 0;
+    background-color: #428bca;
+}
+.pagination-main li.data-num > a {
+    border: 0;
+    margin-left: 0;
+}
+.pagination-main > li {
+    display: inline;
+}
+.pagination-main > li:first-child > a,
+.pagination-main > li:first-child > span {
+    /*margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;*/
+}
+.pagination-main > .active > a,
+.pagination-main > .active > span,
+.pagination-main > .active > a:hover,
+.pagination-main > .active > span:hover,
+.pagination-main > .active > a:focus,
+.pagination-main > .active > span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+.pagination-main > li > a,
+.pagination-main > li > span {
+    position: relative;
+    float: left;
+    /*padding: 6px 12px;*/
+    padding: 1px 8px;
+    margin-left: -1px;
+    line-height: 1.1;
+    color: #428bca;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination-main > .disabled > span,
+.pagination-main > .disabled > span:hover,
+.pagination-main > .disabled > span:focus,
+.pagination-main > .disabled > a,
+.pagination-main > .disabled > a:hover,
+.pagination-main > .disabled > a:focus {
+    color: #999;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}

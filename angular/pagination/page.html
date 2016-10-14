@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" ng-app='myApp'>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/pageSync.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body ng-controller="MyCtrl">
+<style>
+    tr,td{border: 1px solid;}
+</style>
+页面大小：
+<select ng-model="pageData.pageSize" convert-to-number>
+    <option value="1" selected>1</option>
+    <option value="2">2</option>
+</select>
+<table style="border: 1px solid;">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>列名1</th>
+        <th>列名2</th>
+        <th style="width: 150px;text-align: center;">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in pageData.results">
+            <td>{{$index+1+(pageData.pageNo-1)*pageData.pageSize}}</td>
+            <td>{{row.code}}</td>
+            <td>{{row.code}}</td>
+            <td style="text-align: center;"><a href='#'>修改</a></td>
+        </tr>
+    </tbody>
+</table>
+<div style="width: 800px;">
+    <pagination page-data="pageData" prev="prev()" next="next()" load-page="loadPage(no)"></pagination>
+</div>
+
+</body>
+<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+<script src="js/paginationDirective.js"></script>
+<script src="js/paginationService.js"></script>
+<script>
+    (function (angular) {
+        var app = angular.module('myApp',['pagination','paginationService']);
+        angular.module('myApp').directive('convertToNumber', function() {
+            return {
+                require: 'ngModel',
+                link: function(scope, element, attrs, ngModel) {
+                    ngModel.$parsers.push(function(val) {
+                        return parseInt(val, 10);
+                    });
+                    ngModel.$formatters.push(function(val) {
+                        return '' + val;
+                    });
+                }
+            };
+        });
+        angular.module('myApp').controller('MyCtrl', function ($scope,PageSync) {
+            var url = "http://192.168.66.160/changedig/project/shareList?__ajax=true&state=0&enterpriseCode=1&pubRole=2&checkState=0&userCode=147010644418400006&addType=3"
+            //pageData中设置分页数据集合、总页数、页码集合、数据总数，loadTime为自定义的参数，用来记录时间状态（访问数据前及返回数据后）
+            $scope.pageData = {
+                   pageNo: 1,
+                   pageSize: 1
+            };
+            // 分页查询
+            $scope.load = function () {
+                PageSync.load(url, $scope.pageData.pageNo, $scope.pageData.pageSize)
+                        .success(function (data,header,config,status){
+                            //响应成功
+                            if(data.success){
+                                $scope.projectList = data.page.results;
+                                $scope.pageData = data.page;
+                            }else{
+                                console.log('查询分享项目失败！');
+                            }
+                        }).error(function (data){
+                            console.log('查询分享项目失败------。');
+                        });
+            };
+            // 下一页
+            $scope.next = function () {
+                $scope.pageData.pageNo +=1;
+                $scope.load();
+            };
+            // 上一页
+            $scope.prev = function () {
+                $scope.pageData.pageNo +=-1;
+                $scope.load();
+            };
+            // 点击页码跳转
+            $scope.loadPage = function (no) {
+                $scope.pageData.pageNo = no;
+                $scope.load();
+            };
+            $scope.load();
+            $scope.$watch('pageData.pageSize',function(){
+                $scope.load();
+            });
+        });
+    })(window.angular)
+</script>
+</html>

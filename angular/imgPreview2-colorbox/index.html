@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" ng-app='myApp'>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/angular.js/1.5.0-beta.0/angular-sanitize.min.js"></script>
+	
+	<script src="js/jquery.colorbox.js"></script>
+	<script src="js/jquery.colorbox-zh-CN.js"></script>
+	<link rel="stylesheet" href="css/colorbox.css" />
+</head>
+<body ng-controller="MyCtrl">
+	<div id="zixunContent">
+		<div ng-bind-html="content"></div>
+	</div>
+	<img-carousel range="#zixunContent" data="content"></img-carousel>
+</body>
+<script>
+    (function (angular) {
+        var app = angular.module('myApp',['ngSanitize']);
+        angular.module('myApp').directive('imgCarousel', function() {
+            return {
+                restrict: 'AE',
+				scope: {
+						data: '='
+					},
+				link: function ($scope, iElm, iAttrs) {
+					if (iElm.attr("range") != undefined) {
+							imgs = angular.element(iElm.attr("range") + " img");
+					} else {
+						imgs = angular.element("img");
+					}
+					if(imgs.length>0)
+						imgs.colorbox({rel:'group3',width:"75%", height:"75%",photo:true});					
+					
+					$scope.$watch('data', function (newValue, oldValue) {
+						var imgs = [];
+						if (iElm.attr("range") != undefined) {
+							imgs = angular.element(iElm.attr("range") + " img");
+						} else {
+							imgs = angular.element("img");
+						}
+						imgs.colorbox({rel:'group3',width:"75%", height:"75%",photo:true});
+					});
+					}
+					
+				}
+        });
+        angular.module('myApp').controller('MyCtrl', function ($scope, $http) {
+            var url = "http://192.168.66.244/changedig/news/queryDetailWeb?__ajax=true&userCode=&enterpriseCode=1&code=146241312602300175"
+            // 分页查询
+            $scope.load = function () {
+                $http.get(url).success(function (data,header,config,status){
+					if(data.success){
+						$scope.content = data.content.content;
+					}else{
+						console.log('查询分享项目失败！');
+					}
+				}).error(function (data){
+					console.log('查询分享项目失败------。');
+				});
+            };    
+			$scope.load();			
+        });
+    })(window.angular)
+</script>
+</html>

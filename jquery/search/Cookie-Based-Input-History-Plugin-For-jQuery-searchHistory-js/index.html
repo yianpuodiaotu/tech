@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>searchHistory jQuery Plugin Demo</title>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="jquery.searchHistory.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="jquery.searchHistory.js"></script>
+    <script type="text/javascript"> 
+    // js call function
+      $(function(){
+      	$('#historyForm').searchHistory({
+      		'sendWhenSelect':false
+      	});
+      });
+    </script>
+    <style>
+    body { background-color:#009688; color:#fff;}
+    .container { margin:150px;}
+    </style>
+  </head>
+  <body><div id="jquery-script-menu">
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+    <div class="container mainbody">
+    <h1>searchHistory jQuery Plugin Demo</h1>
+      <div class="row">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1" style="padding:0px;">
+            <form id="historyForm" action="" method="POST">
+              <div class="form-control-group">
+                <input type="text" placeholder="input" class="history-input form-control"  style="border-radius:0px;">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="power">Created by Adam @ CS class21 & Powered by Node.js</div>
+    </div>
+  </body>
+</html>

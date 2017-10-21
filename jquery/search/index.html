@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" ng-app='myApp'>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.css">
+    <script type="text/javascript" src="js/jquery.autocomplete.js"></script>
+</head>
+<body>
+<input id="title" name="title" emptyText="请输入" />
+</body>
+<script>
+    var states = [
+        'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
+        'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+        'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+        'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+        'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+        'New Jersey', 'New Mexico', 'New York', 'North Carolina',
+        'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
+        'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
+        'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
+        'West Virginia', 'Wisconsin', 'Wyoming'
+    ];
+    $(function() {
+        $("input").autocomplete({
+            source:[states]
+        });
+    });
+</script>
+</html>

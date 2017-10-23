@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.TestMapper">
+
+
+
+    <resultMap type="com.example.demo.entity.TestEntity" id="testMap">
+        <id property="code" column="code" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+        <result property="sex" column="sex" />
+    </resultMap>
+
+
+
+    <sql id="BaseColumnList">
+        code,
+        name,
+        age,
+        sex
+    </sql>
+
+
+    <!--  添加文件-->
+    <insert id="addTest" parameterType="com.example.demo.entity.TestEntity">
+        INSERT INTO test
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            code,
+            <if test="name !=null ">
+                name,
+            </if>
+            <if test="age !=null ">
+                age,
+            </if>
+            sex
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{code},
+            <if test="name != null" >
+                #{name},
+            </if>
+            <if test="age != null" >
+                #{age},
+            </if>
+            #{sex}
+        </trim>
+    </insert>
+</mapper>

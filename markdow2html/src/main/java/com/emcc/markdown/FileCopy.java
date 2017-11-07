@@ -24,7 +24,7 @@ public class FileCopy {
 			int byteread = 0;
 			File oldfile = new File(oldPath);
 			if (oldfile.exists()) {
-				InputStream inStream = new FileInputStream(oldPath); 
+				FileInputStream inStream = new FileInputStream(oldPath); 
 				FileOutputStream fs = new FileOutputStream(newPath);
 				if(oldfile.getName().endsWith(".md")){
 					MarkdownEntity html = MarkDown2HtmlWrapper.ofStream(inStream);

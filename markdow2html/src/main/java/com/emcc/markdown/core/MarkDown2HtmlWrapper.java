@@ -73,8 +73,15 @@ public class MarkDown2HtmlWrapper {
     public static MarkdownEntity ofStream(InputStream stream) {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8")));
         List<String> lines = bufferedReader.lines().collect(Collectors.toList());
-        String content = Joiner.on("\n").join(lines);
-        return ofContent(content);
+        String imgPredix = "img src=\""+Application.getProperty("img_url_predix") + "/";
+        StringBuffer bf = new StringBuffer();
+        for (String line : lines) {
+        	line = line.replaceAll("img src=\"http://192.168.66.162:4567/documents/", imgPredix);
+        	line = line.replaceAll("img src=\"/documents/", imgPredix);
+        	bf.append(line).append("\n"); 
+		}
+        //String content = Joiner.on("\n").join(lines);
+        return ofContent(bf.toString());
     }
 
 
@@ -95,6 +102,7 @@ public class MarkDown2HtmlWrapper {
         entity.setCss(MD_CSS);
         entity.setHtml(html);
         entity.addDivStyle("class", "markdown-body ");
+        entity.addDivStyle("id", "notus-switcher-content");
         return entity;
     }
 

@@ -26,6 +26,8 @@
 		<mybatis-spring.version>1.2.2</mybatis-spring.version>
 		
         <springfox.version>2.5.0</springfox.version>
+        
+        <flexmark.version>0.26.4</flexmark.version>
 	</properties>
 
 	<dependencies>
@@ -78,6 +80,40 @@
 			<artifactId>springfox-staticdocs</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
+		
+		 <!--markdown to html-->
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-util</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-ext-tables</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-ext-gfm-tasklist</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency> -->
+        <!--markdown to html end-->
+        
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+            <version>4.5.2</version>
+        </dependency>
 	</dependencies>
 
 	<build>

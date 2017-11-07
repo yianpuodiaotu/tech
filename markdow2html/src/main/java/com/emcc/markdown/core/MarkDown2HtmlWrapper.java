@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.emcc.markdown.Application;
 import com.emcc.markdown.utis.FileReadUtil;
 import com.google.common.base.Joiner;
 import com.vladsch.flexmark.Extension;
@@ -84,8 +85,13 @@ public class MarkDown2HtmlWrapper {
      * @return
      */
     public static MarkdownEntity ofContent(String content) {
+    	boolean  withCss = false;
+    	String v = Application.getProperty("withCss");
+    	if(v != null && v.equals("true")){
+    		withCss = true;
+    	}
         String html = parse(content);
-        MarkdownEntity entity = new MarkdownEntity();
+        MarkdownEntity entity = new MarkdownEntity(withCss);
         entity.setCss(MD_CSS);
         entity.setHtml(html);
         entity.addDivStyle("class", "markdown-body ");
@@ -101,7 +107,7 @@ public class MarkDown2HtmlWrapper {
      */
     public static String parse(String content) {
         MutableDataSet options = new MutableDataSet();
-        options.setFrom(ParserEmulationProfile.MARKDOWN);
+        options.setFrom(ParserEmulationProfile.MULTI_MARKDOWN);
 
         // enable table parse!
         options.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create()));

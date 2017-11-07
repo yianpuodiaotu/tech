@@ -12,6 +12,8 @@ public class MarkdownEntity {
 
     // css 样式
     private String css;
+    
+    private boolean withCss = false;
 
     // 最外网的div标签， 可以用来设置样式，宽高，字体等
     private Map<String, String> divStyle = new ConcurrentHashMap<>();
@@ -21,6 +23,9 @@ public class MarkdownEntity {
 
     public MarkdownEntity() {
     }
+    public MarkdownEntity(boolean withCss) {
+    	this.withCss = withCss;
+    }
 
     public MarkdownEntity(String html) {
         this.html = html;
@@ -28,7 +33,12 @@ public class MarkdownEntity {
 
     @Override
     public String toString() {
-        return css + "\n<div " + parseDiv() + ">\n" + html + "\n</div>";
+    	if(withCss){
+    		return css + "\n<div " + parseDiv() + ">\n" + html + "\n</div>";
+    	}else{
+    		 return "<div " + parseDiv() + ">\n" + html + "\n</div>";
+    	}
+       
     }
 
 

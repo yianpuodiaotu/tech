@@ -21,7 +21,6 @@ public class FileCopy {
 	 */
 	public static void copyFile(String oldPath, String newPath) {
 		try {
-			int bytesum = 0;
 			int byteread = 0;
 			File oldfile = new File(oldPath);
 			if (oldfile.exists()) {
@@ -32,10 +31,7 @@ public class FileCopy {
 					fs.write(html.toString().getBytes());
 				}else{
 					byte[] buffer = new byte[1024];
-					int length;
 					while ((byteread = inStream.read(buffer)) != -1) {
-						bytesum += byteread; 
-						System.out.println(bytesum);
 						fs.write(buffer, 0, byteread);
 					}
 				}

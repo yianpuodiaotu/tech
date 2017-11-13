@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular.js/1.3.16/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+  第一种情况： 指定 prefix ，强制使用prefix作为collection。&lt;uri-input ng-model="uri" prefix='schema'&gt;&lt;/uri-input&gt;
+  <br>
+  <uri-input ng-model="uri" prefix='schema'></uri-input>
+  URI: {{uri}}
+  <hr>
+  第二种情况： 不指定predix，使用ngModel中的collection。&lt;uri-input ng-model="uri"&gt;&lt;/uri-input&gt;
+  <br>
+  <uri-input ng-model="uri2"></uri-input>
+  URI2: {{uri2}}
+  <hr>
+  两个输入框的情况&lt;uri-input2 ng-model="uri"&gt;&lt;/uri-input2&gt;
+  <uri-input2 ng-model="uri3"></uri-input2>
+   URI3: {{uri3}}
+</div>
+</body>
+<script>
+var app = angular.module("myApp", []);
+app.controller('myCtrl', function($scope) {
+    $scope.uri = "";
+    $scope.uri2 = "/triggers/motor";
+});
+
+app.directive("uriInput", function() {
+    return {
+		restrict: 'E',
+		scope: {
+		  ngModel: '=',
+		  prefix: '@'
+		},
+        template : 
+			'<div class="input-group"><span class="input-group-addon" id="basic-addon1" >{{col}}</span>'+
+			'<input type="text" class="form-control" placeholder="name" aria-describedby="basic-addon1" ng-model="name"></div>',
+		replace: true,
+		require: 'ngModel',
+		link: function(scope, iElement, iAttrs, ngModelCtrl) {
+			// $modelValue->$viewValue
+            ngModelCtrl.$formatters.push(function(modelValue) {
+                var name = '', index;
+				index = modelValue.lastIndexOf('/');
+				
+				if(scope.prefix){
+					col = '/' + scope.prefix + '/';
+				}else{
+					col = modelValue.substring(0,index+1);;
+				}
+				
+				name = modelValue.substring(index + 1);
+						
+                return {
+                    name:  name,
+					col : col
+                };
+            });
+			// $viewValue->$modelValue
+            ngModelCtrl.$parsers.push(function(viewValue) {
+                var collection = viewValue.col, name = viewValue.name;
+                return collection + name ;
+            });
+
+			// 模板中的变量发生变化之后，我们调用$setViewValue()来更新$viewValue。
+            scope.$watch('col+name', function() {
+                ngModelCtrl.$setViewValue({ col: scope.col,name: scope.name });
+            });
+			
+			// 将$viewValue渲染到directive template中。
+            ngModelCtrl.$render = function() {
+                if (!ngModelCtrl.$viewValue) {
+					$viewValue = {col:'',name: ''};
+				}
+				
+				scope.col = ngModelCtrl.$viewValue.col;
+                scope.name  = ngModelCtrl.$viewValue.name;
+            };
+        
+        }
+    };
+});
+
+
+app.directive("uriInput2", function() {
+    return {
+		restrict: 'E',
+		scope: {
+		  ngModel: '='
+		},
+        template : 
+			'<div class="input-group">                                                                       '+
+			' <div class="input-group-addon">/</div>                                                         '+
+			' <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount" ng-model="col">'+
+			' <div class="input-group-addon">/</div>                                                         '+
+			' <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount" ng-model="name">'+
+			'</div>                                                                                          ',
+		replace: true,
+		require: 'ngModel',
+		link: function(scope, iElement, iAttrs, ngModelCtrl) {
+			// $modelValue->$viewValue
+            ngModelCtrl.$formatters.push(function(modelValue) {			
+                var col = '', name = '', index1 , index2;
+				if(modelValue){
+					index1 = modelValue.indexOf('/');
+					index2 = modelValue.lastIndexOf('/');
+					
+					// 没有斜线
+					if(index2 == -1){
+						name = '';
+						col = '';
+					}else if(index1 == index2 && index1 > -1){// 只有一个斜线			
+						col = modelValue.substring(1);
+						name = '';
+					}else{// 两个斜线都有
+						col = modelValue.substring(1,index2-1);
+						name = modelValue.substring(index2+1);
+					}
+				}
+						
+                return {
+                    name:  name,
+					col : col
+                };
+            });
+			// $viewValue->$modelValue
+            ngModelCtrl.$parsers.push(function(viewValue) {
+                var collection = viewValue.col, name = viewValue.name;
+				if(name.length > 0){
+					return "/" + collection + "/" + name ;
+				}else if(collection.length > 0){
+					return "/" + collection;
+				}else{
+					return '';
+				}
+            });
+
+			// 模板中的变量发生变化之后，我们调用$setViewValue()来更新$viewValue。
+            scope.$watch('col+name', function() {
+                ngModelCtrl.$setViewValue({ col: scope.col,name: scope.name });
+            });
+			
+			// 将$viewValue渲染到directive template中。
+            ngModelCtrl.$render = function() {
+                if (!ngModelCtrl.$viewValue) {
+					$viewValue = {col:'',name: ''};
+				}
+				
+				scope.col = ngModelCtrl.$viewValue.col;
+                scope.name  = ngModelCtrl.$viewValue.name;
+            };
+        
+        }
+    };
+});
+</script>
+</html>

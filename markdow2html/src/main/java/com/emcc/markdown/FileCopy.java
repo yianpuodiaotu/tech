@@ -77,7 +77,7 @@ public class FileCopy {
 						FileCopy.copyFile(oldPath + "/" + file[i], newPath + "/" + file[i]);
 					}
 				}
-				if (temp.isDirectory()) {// 如果是子文件夹
+				if (temp.isDirectory()&&(!temp.getName().equals(".git"))) {// 如果是子文件夹
 					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
 				}
 			}
